@@ -1,0 +1,1 @@
+export {HttpUtil} from './src/main/ets/utils/HttpUtil'
