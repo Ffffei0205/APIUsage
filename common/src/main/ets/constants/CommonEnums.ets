@@ -6,10 +6,7 @@
  * 文件描述: TODO
  */
 export enum StorageKey {
-  /*
-   * 定义AppStorage 枚举类
-   *
-   * */
-  UI_CONTEXT = 'hanbao_UIContext', // UIContext
-  CURRENT_COLOR_MODE = 'currentColorMode'
+  UI_CONTEXT = 'hanbao_UIContext',
+  CURRENT_COLOR_MODE = 'currentColorMode',
+  API_KEY = 'hanbao_api_key'
 }

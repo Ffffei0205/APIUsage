@@ -10,7 +10,107 @@
     },
     {
       "name": "EntryAbility_label",
-      "value": "label"
+      "value": "ApiUsage"
+    },
+    {
+      "name": "tab_balance",
+      "value": "余额"
+    },
+    {
+      "name": "tab_settings",
+      "value": "设置"
+    },
+    {
+      "name": "title_balance",
+      "value": "API 用量查询"
+    },
+    {
+      "name": "title_settings",
+      "value": "设置"
+    },
+    {
+      "name": "no_api_key_hint",
+      "value": "请先在设置页配置 API Key"
+    },
+    {
+      "name": "go_to_settings",
+      "value": "前往设置"
+    },
+    {
+      "name": "account_available",
+      "value": "账户可用"
+    },
+    {
+      "name": "account_unavailable",
+      "value": "账户不可用"
+    },
+    {
+      "name": "total_balance",
+      "value": "总余额"
+    },
+    {
+      "name": "granted_balance",
+      "value": "赠送余额"
+    },
+    {
+      "name": "topped_up_balance",
+      "value": "充值余额"
+    },
+    {
+      "name": "api_key_label",
+      "value": "API Key"
+    },
+    {
+      "name": "api_key_placeholder",
+      "value": "请输入 DeepSeek API Key"
+    },
+    {
+      "name": "save",
+      "value": "保存"
+    },
+    {
+      "name": "delete_key",
+      "value": "删除 Key"
+    },
+    {
+      "name": "key_not_set",
+      "value": "未设置"
+    },
+    {
+      "name": "key_saved",
+      "value": "已保存"
+    },
+    {
+      "name": "refresh",
+      "value": "刷新"
+    },
+    {
+      "name": "retry",
+      "value": "重试"
+    },
+    {
+      "name": "about_app",
+      "value": "关于"
+    },
+    {
+      "name": "app_version",
+      "value": "版本 1.0.0"
+    },
+    {
+      "name": "loading",
+      "value": "加载中..."
+    },
+    {
+      "name": "save_success",
+      "value": "保存成功"
+    },
+    {
+      "name": "delete_success",
+      "value": "已删除"
+    },
+    {
+      "name": "api_key_required",
+      "value": "请输入 API Key"
     }
   ]
 }

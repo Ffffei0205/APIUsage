@@ -1,11 +1,5 @@
-/**
- * 项目名称: ApiUsage
- * 文件名称: HttpUtil
- * 创建时间: 2026-06-04 00:22
- * 创建人：  @author Ffffei
- * 文件描述: TODO
- */
 import { rcp } from '@kit.RemoteCommunicationKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 import Logger from '../utils/Logger';
 
 const TAG = '[HttpUtil]'
@@ -18,7 +12,6 @@ export class HttpUtil {
     this.rcpCreateSession()
   }
 
-
   public static getInstance(): HttpUtil {
     if (!HttpUtil.instance) {
       HttpUtil.instance = new HttpUtil()
@@ -30,7 +23,8 @@ export class HttpUtil {
     try {
       this.rcpSession = rcp.createSession();
     } catch (error) {
-      Logger.error(TAG, `createSession failed, code: ${error.code}, message: ${error.message.toString()}`);
+      const err: BusinessError = error
+      Logger.error(TAG, 'createSession failed, code: ' + err.code.toString() + ', message: ' + err.message.toString());
     }
   }
 
@@ -38,7 +32,6 @@ export class HttpUtil {
     content?: rcp.RequestContent): Promise<HttpResponse<T>> {
     if (this.rcpSession) {
       try {
-        Logger.info(TAG,`${method},${headers}`)
         const request = new rcp.Request(url)
         if (method) {
           request.method = method
@@ -47,25 +40,26 @@ export class HttpUtil {
           request.headers = headers
         }
         const response = await this.rcpSession.fetch(request)
+        const result: T = JSON.parse(JSON.stringify(response))
         if (response.statusCode == 200) {
-          const result = response.toJSON() as T
           return {
             code: 200,
             data: result,
-            message: 'ddd'
+            message: 'success'
           }
         } else {
-          const result = response.toJSON() as T
-          Logger.error(TAG,`${response.statusCode},${response.toString()}}`)
+          Logger.error(TAG, 'request failed, statusCode: ' + response.statusCode.toString())
+          const msg: string = response.toString() ?? ''
           return {
             code: response.statusCode,
             data: result,
-            message: response.toString() as string
+            message: msg
           }
         }
       } catch (error) {
+        const err: BusinessError = error
         Logger.error(TAG,
-          `获取数据出错,错误码:${(error as BusinessError).code};错误信息:${(error as BusinessError).message}`)
+          '获取数据出错,错误码:' + err.code.toString() + ';错误信息:' + err.message.toString())
         throw new Error('网络请求失败')
       }
     } else {
@@ -73,10 +67,6 @@ export class HttpUtil {
       return this.fetchRes<T>(url, method, headers, content)
     }
   }
-
-
-
-
 }
 
 export interface HttpResponse<T> {
