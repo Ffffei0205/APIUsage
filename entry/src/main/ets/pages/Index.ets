@@ -5,7 +5,8 @@ import { StorageKey } from 'common/src/main/ets/constants/CommonEnums';
 import { UIContext } from '@kit.ArkUI';
 
 import { HdsTabs,hdsMaterial, HdsTabsController } from '@kit.UIDesignKit';
-
+import { TabsBarModel } from '../model/TabsBarModel';
+import Logger from 'common/src/main/ets/utils/Logger'
 
 @Entry
 @Component
@@ -16,9 +17,10 @@ struct Index {
   @State apiKeyInput: string = ''
   @State savedKeyMasked: string = ''
   @State hasApiKey: boolean = false
-  @State currentIndex: number = 0
   private controller: HdsTabsController = new HdsTabsController();
   private preferenceManager: PreferenceManager = PreferenceManager.getInstance()
+  private tabsBar: BottomTabBarStyle[] = TabsBarModel.getTabBarByPage() ?? [];
+
 
   aboutToAppear(): void {
     this.tryInitAndLoad()
@@ -79,7 +81,7 @@ struct Index {
     this.hasApiKey = true
     this.savedKeyMasked = this.maskKey(key)
     this.apiKeyInput = ''
-    this.currentIndex = 0
+    this.controller.changeIndex(0)
     this.queryBalance(key)
   }
 
@@ -380,41 +382,20 @@ struct Index {
     .borderRadius(12)
   }
 
-  @Builder
-  tabBuilder(title: Resource, targetIndex: number, icon?: Resource) {
-    Column() {
-      // Image(icon)
-      //   .width("24vp")
-      //   .height("24vp")
-      //   .fillColor(targetIndex !== this.currentIndex ? ($r("app.color.app_icon_color")) :
-      //     ($r("app.color.app_icon_pressed_color")))
-      Text(title)
-        .fontSize("15vp")
-        .fontColor(targetIndex !== this.currentIndex ? ($r("app.color.app_icon_color")) :
-          ($r("app.color.app_icon_pressed_color")))
-        .textAlign(TextAlign.Center)
-        .lineHeight("14vp")
-        .fontWeight(400)
-    }
-    .width('100%')
-    .justifyContent(FlexAlign.Center)
-    .alignItems(HorizontalAlign.Center)
-  }
-
-
-
   build() {
     Column() {
       HdsTabs({ controller: this.controller }) {
-        TabContent() {
-          this.balancePage()
-        }
-        .tabBar(this.tabBuilder($r('app.string.tab_balance'),0))
-
-        TabContent() {
-          this.settingsPage()
-        }
-        .tabBar(this.tabBuilder($r('app.string.tab_settings'),1))
+        Repeat(this.tabsBar).each((repeatItem: RepeatItem<BottomTabBarStyle>) => {
+          TabContent() {
+            // 根据 repeatItem.index 渲染对应页面
+            if (repeatItem.index == 0) {
+              this.balancePage()
+            }else if (repeatItem.index == 1) {
+              this.settingsPage()
+            }
+          }
+          .tabBar(repeatItem.item)
+        })
       }
       .width('100%')
       //悬浮导航
@@ -429,12 +410,6 @@ struct Index {
           materialLevel: hdsMaterial.MaterialLevel.ADAPTIVE
         }
       })
-
-
-      .onChange((index: number) => {
-        this.currentIndex = index
-      })
-
     }
     .width('100%')
     .height('100%')
