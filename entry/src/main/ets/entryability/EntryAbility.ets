@@ -1,7 +1,8 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window, UIContext } from '@kit.ArkUI';
-import { StorageKey } from 'common/src/main/ets/constants/CommonEnums';
+import { StorageKey } from 'common';
+import { WindowUtil } from 'common';
 
 const DOMAIN = 0x0000;
 
@@ -23,9 +24,13 @@ export default class EntryAbility extends UIAbility {
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
     windowStage.loadContent('pages/Index', (err) => {
-      const uiContext: UIContext = windowStage.getMainWindowSync().getUIContext();
-      AppStorage.setOrCreate(StorageKey.UI_CONTEXT, uiContext);
 
+      WindowUtil.initialize(windowStage);
+
+
+
+
+      // 下面是错误处理
       if (err.code) {
         hilog.error(DOMAIN, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err));
         return;

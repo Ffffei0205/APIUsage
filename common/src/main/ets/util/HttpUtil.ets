@@ -1,6 +1,6 @@
 import { rcp } from '@kit.RemoteCommunicationKit';
 import { BusinessError } from '@kit.BasicServicesKit';
-import Logger from '../utils/Logger';
+import Logger  from "./Logger";
 
 const TAG = '[HttpUtil]'
 

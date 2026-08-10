@@ -1,12 +1,12 @@
 import DeepSeekApi from '../api/DeepSeekApi';
 import { BalanceResponse, BalanceInfo } from '../api/DeepSeekApi';
 import { PreferenceManager } from 'common/src/main/ets/storagemanager/PreferenceManager';
-import { StorageKey } from 'common/src/main/ets/constants/CommonEnums';
+import { StorageKey } from 'common/src/main/ets/constant/CommonEnums';
 import { UIContext } from '@kit.ArkUI';
-
-import { HdsTabs,hdsMaterial, HdsTabsController } from '@kit.UIDesignKit';
+import { HdsTabs,hdsMaterial, HdsTabsController, HdsNavigation, HdsNavDestination } from '@kit.UIDesignKit';
 import { TabsBarModel } from '../model/TabsBarModel';
-import Logger from 'common/src/main/ets/utils/Logger'
+import { GlobalInfoModel, Logger } from "common";
+
 
 @Entry
 @Component
@@ -18,8 +18,10 @@ struct Index {
   @State savedKeyMasked: string = ''
   @State hasApiKey: boolean = false
   private controller: HdsTabsController = new HdsTabsController();
-  private preferenceManager: PreferenceManager = PreferenceManager.getInstance()
   private tabsBar: BottomTabBarStyle[] = TabsBarModel.getTabBarByPage() ?? [];
+  private preferenceManager: PreferenceManager = PreferenceManager.getInstance()
+  @StorageProp(StorageKey.GLOBAL_INFO) globalInfoModel: GlobalInfoModel =
+    AppStorage.get(StorageKey.GLOBAL_INFO) ?? new GlobalInfoModel();
 
 
   aboutToAppear(): void {
@@ -39,7 +41,7 @@ struct Index {
   }
 
   private loadApiKey(): void {
-    const key: string | null = this.preferenceManager.getValue<string>(StorageKey.API_KEY)
+    const key: string | null = this.preferenceManager.getValue<string>(StorageKey.DS_API_KEY)
     if (key != null && key.length > 0) {
       this.hasApiKey = true
       this.savedKeyMasked = this.maskKey(key)
@@ -77,7 +79,7 @@ struct Index {
     if (key.length === 0) {
       return
     }
-    this.preferenceManager.setValue<string>(StorageKey.API_KEY, key)
+    this.preferenceManager.setValue<string>(StorageKey.DS_API_KEY, key)
     this.hasApiKey = true
     this.savedKeyMasked = this.maskKey(key)
     this.apiKeyInput = ''
@@ -86,7 +88,7 @@ struct Index {
   }
 
   private deleteApiKey(): void {
-    this.preferenceManager.deleteValue(StorageKey.API_KEY)
+    this.preferenceManager.deleteValue(StorageKey.DS_API_KEY)
     this.hasApiKey = false
     this.savedKeyMasked = ''
     this.balanceResponse = null
@@ -115,6 +117,7 @@ struct Index {
 
       Blank()
     }
+    .padding({top: this.globalInfoModel.statusBarHeight})
     .width('100%')
     .height('100%')
     .backgroundColor($r('app.color.page_background'))
@@ -170,7 +173,7 @@ struct Index {
         .fontColor(Color.White)
         .borderRadius(8)
         .onClick(() => {
-          const key: string | null = this.preferenceManager.getValue<string>(StorageKey.API_KEY)
+          const key: string | null = this.preferenceManager.getValue<string>(StorageKey.DS_API_KEY)
           if (key != null) {
             this.queryBalance(key)
           }
@@ -195,7 +198,7 @@ struct Index {
             .height(36)
             .padding({ left: 16, right: 16 })
             .onClick(() => {
-              const key: string | null = this.preferenceManager.getValue<string>(StorageKey.API_KEY)
+              const key: string | null = this.preferenceManager.getValue<string>(StorageKey.DS_API_KEY)
               if (key != null) {
                 this.queryBalance(key)
               }
@@ -308,6 +311,7 @@ struct Index {
       .width('100%')
       .layoutWeight(1)
     }
+    .padding({top: this.globalInfoModel.statusBarHeight})
     .width('100%')
     .height('100%')
     .backgroundColor($r('app.color.page_background'))
@@ -384,32 +388,35 @@ struct Index {
 
   build() {
     Column() {
-      HdsTabs({ controller: this.controller }) {
-        Repeat(this.tabsBar).each((repeatItem: RepeatItem<BottomTabBarStyle>) => {
-          TabContent() {
-            // 根据 repeatItem.index 渲染对应页面
-            if (repeatItem.index == 0) {
-              this.balancePage()
-            }else if (repeatItem.index == 1) {
-              this.settingsPage()
+      HdsNavigation() {
+        HdsTabs({ controller: this.controller }) {
+          Repeat(this.tabsBar).each((repeatItem: RepeatItem<BottomTabBarStyle>) => {
+            TabContent() {
+              // 根据 repeatItem.index 渲染对应页面
+              if (repeatItem.index == 0) {
+                this.balancePage()
+              }else if (repeatItem.index == 1) {
+                this.settingsPage()
+              }
             }
+            .tabBar(repeatItem.item)
+          })
+        }
+        .width('100%')
+        //悬浮导航
+        .vertical(false)
+        .barOverlap(true)
+        .barPosition(BarPosition.End)
+        .barFloatingStyle({
+          barWidth: { smallWidth: 200, mediumWidth: 300, largeWidth: 400 },
+          barBottomMargin: this.globalInfoModel.naviIndicatorHeight,
+          systemMaterialEffect: {
+            materialType: hdsMaterial.MaterialType.IMMERSIVE,
+            materialLevel: hdsMaterial.MaterialLevel.ADAPTIVE
           }
-          .tabBar(repeatItem.item)
         })
       }
-      .width('100%')
-      //悬浮导航
-      .vertical(false)
-      .barOverlap(true)
-      .barPosition(BarPosition.End)
-      .barFloatingStyle({
-        barWidth: { smallWidth: 200, mediumWidth: 300, largeWidth: 400 },
-        barBottomMargin: 10,
-        systemMaterialEffect: {
-          materialType: hdsMaterial.MaterialType.IMMERSIVE,
-          materialLevel: hdsMaterial.MaterialLevel.ADAPTIVE
-        }
-      })
+      .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
     }
     .width('100%')
     .height('100%')

@@ -1,8 +1,8 @@
 import { preferences, ValueType } from "@kit.ArkData";
-import { StorageKey } from '../constants/CommonEnums';
+import { StorageKey } from '../constant/CommonEnums';
 import { UIContext } from "@kit.ArkUI";
 import { BusinessError } from '@kit.BasicServicesKit';
-import Logger from "../utils/Logger";
+import Logger from "../util/Logger";
 
 
 const TAG: string = '[PreferenceManager]';
