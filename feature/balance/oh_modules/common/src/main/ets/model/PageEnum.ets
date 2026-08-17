@@ -12,5 +12,6 @@ export enum PageEnum {
   BALANCE_VIEW = 'BalanceView',
   MINE_VIEW = 'MineView',
   SETTING_VIEW = 'SettingView',
+  BACKGROUND_SETTING_VIEW = 'BackgroundSettingView',
   API_SETTING_VIEW = "APISettingView"
 }

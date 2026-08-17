@@ -55,6 +55,22 @@
     {
       "name": "api_setting",
       "value": "API 配置"
+    },
+    {
+      "name": "theme_follow_system",
+      "value": "跟随系统"
+    },
+    {
+      "name": "background_setting",
+      "value": "背景设置"
+    },
+    {
+      "name": "theme_light",
+      "value": "浅色模式"
+    },
+    {
+      "name": "theme_dark",
+      "value": "深色模式"
     }
   ]
 }

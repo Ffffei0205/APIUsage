@@ -4,5 +4,6 @@ export { HttpUtil } from './HttpUtil'
 
 export { WindowUtil } from './WindowUtil'
 
+export { AppThemeMode, ThemeManager } from './ThemeManager'
 
 export { ProcessUtil } from './ProcessUtil'

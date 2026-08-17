@@ -11,6 +11,11 @@
       "buildFunction": "SettingViewBuilder"
     },
     {
+      "name": "BackgroundSettingView",
+      "pageSourceFile": "src/main/ets/view/BackgroundSettingView.ets",
+      "buildFunction": "BackgroundSettingViewBuilder"
+    },
+    {
       "name": "APISettingView",
       "pageSourceFile": "src/main/ets/view/APISettingView.ets",
       "buildFunction": "APISettingViewBuilder"

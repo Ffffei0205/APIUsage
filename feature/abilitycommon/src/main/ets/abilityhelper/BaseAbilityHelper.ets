@@ -5,8 +5,8 @@
  * 创建人：  @author Ffffei
  * 文件描述: ability中所有函数抽调，统一在这里进行
  */
-import { common, Want, AbilityConstant, ConfigurationConstant } from "@kit.AbilityKit";
-import { Logger, PageContext, StorageKey, WindowUtil } from "common";
+import { common, Want, AbilityConstant } from "@kit.AbilityKit";
+import { Logger, PageContext, StorageKey, ThemeManager, WindowUtil } from "common";
 import { window } from "@kit.ArkUI";
 
 
@@ -20,11 +20,7 @@ export class BaseAbilityHelper {
 
   public doOnCreate(context: common.UIAbilityContext, want: Want, launchParam: AbilityConstant.LaunchParam):void {
     this.context = context
-    try {
-      this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
-    } catch (err) {
-      Logger.error(TAG, `setColorMode failed, code: ${err.code}, message: ${err.message}`);
-    }
+    ThemeManager.initialize(context);
     Logger.info(TAG, 'Ability onCreate');
   }
 
@@ -41,7 +37,7 @@ export class BaseAbilityHelper {
 
     windowStage.loadContent('pages/SplashPage', (err) => {
       WindowUtil.initialize(windowStage);
-
+      ThemeManager.restoreThemeMode();
       // 下面是错误处理
       if (err.code) {
         Logger.error(TAG, `Failed to load the content. Cause: ${err.code} ${err.message}`);
