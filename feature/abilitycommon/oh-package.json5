@@ -1,0 +1,13 @@
+{
+  "name": "abilitycommon",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "common": 'file:../../common',
+    "mine": "file:../../feature/mine",
+    "balance": "file:../../feature/balance"
+  }
+}

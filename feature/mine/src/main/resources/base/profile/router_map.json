@@ -1,0 +1,19 @@
+{
+  "routerMap": [
+    {
+      "name": "MineView",
+      "pageSourceFile": "src/main/ets/view/MineView.ets",
+      "buildFunction": "MineViewBuilder"
+    },
+    {
+      "name": "SettingView",
+      "pageSourceFile": "src/main/ets/view/SettingView.ets",
+      "buildFunction": "SettingViewBuilder"
+    },
+    {
+      "name": "APISettingView",
+      "pageSourceFile": "src/main/ets/view/APISettingView.ets",
+      "buildFunction": "APISettingViewBuilder"
+    }
+  ]
+}

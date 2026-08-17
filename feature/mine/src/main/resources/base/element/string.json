@@ -1,0 +1,60 @@
+{
+  "string": [
+    {
+      "name": "title_settings",
+      "value": "设置"
+    },
+    {
+      "name": "api_key_label",
+      "value": "API Key"
+    },
+    {
+      "name": "api_key_placeholder",
+      "value": "请输入 DeepSeek API Key"
+    },
+    {
+      "name": "save",
+      "value": "保存"
+    },
+    {
+      "name": "delete_key",
+      "value": "删除 Key"
+    },
+    {
+      "name": "key_not_set",
+      "value": "未设置"
+    },
+    {
+      "name": "key_saved",
+      "value": "已保存"
+    },
+    {
+      "name": "about_app",
+      "value": "关于"
+    },
+    {
+      "name": "app_version",
+      "value": "版本 1.0.0"
+    },
+    {
+      "name": "feedback",
+      "value": "反馈"
+    },
+    {
+      "name": "setting",
+      "value": "设置"
+    },
+    {
+      "name": "mine_title",
+      "value": "我的"
+    },
+    {
+      "name": "title_api_setting",
+      "value": "API Key 配置"
+    },
+    {
+      "name": "api_setting",
+      "value": "API 配置"
+    }
+  ]
+}

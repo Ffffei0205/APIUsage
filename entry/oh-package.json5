@@ -6,7 +6,9 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "common":'file:../common/'
+    "common":'file:../common/',
+    "mine": "file:../feature/mine",
+    "abilitycommon": "file:../feature/abilitycommon"
   }
 }
 

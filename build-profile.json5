@@ -63,6 +63,22 @@
           ]
         }
       ]
+    },
+    {
+      "name": "commonbusiness",
+      "srcPath": "./feature/commonbusiness",
+    },
+    {
+      "name": "abilitycommon",
+      "srcPath": "./feature/abilitycommon",
+    },
+    {
+      "name": "mine",
+      "srcPath": "./feature/mine",
+    },
+    {
+      "name": "balance",
+      "srcPath": "./feature/balance",
     }
   ]
 }

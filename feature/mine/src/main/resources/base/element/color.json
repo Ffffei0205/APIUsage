@@ -1,0 +1,32 @@
+{
+  "color": [
+    {
+      "name": "title_color",
+      "value": "#182431"
+    },
+    {
+      "name": "success_color",
+      "value": "#64BB5C"
+    },
+    {
+      "name": "secondary_color",
+      "value": "#66000000"
+    },
+    {
+      "name": "divider_color",
+      "value": "#33000000"
+    },
+    {
+      "name": "primary_color",
+      "value": "#007DFF"
+    },
+    {
+      "name": "error_color",
+      "value": "#E84026"
+    },
+    {
+      "name": "card_background",
+      "value": "#FFFFFF"
+    }
+  ]
+}

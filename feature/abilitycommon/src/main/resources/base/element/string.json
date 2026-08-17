@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "page_show",
+      "value": "page from package"
+    },
+    {
+      "name": "tab_balance",
+      "value": "余额"
+    },
+    {
+      "name": "tab_settings",
+      "value": "设置"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+export { MineHomeView } from './src/main/ets/view/MineHomeView';

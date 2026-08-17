@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "commonbusiness",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

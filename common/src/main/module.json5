@@ -6,7 +6,6 @@
     "deviceTypes": [
       "phone"
     ],
-    "deliveryWithInstall": true,
-    "pages": "$profile:main_pages"
+    "deliveryWithInstall": true
   }
 }
