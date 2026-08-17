@@ -1,0 +1,9 @@
+{
+  "routerMap": [
+    {
+      "name": "BalanceView",
+      "pageSourceFile": "src/main/ets/view/BalanceView.ets",
+      "buildFunction": "BalanceViewBuilder"
+    }
+  ]
+}

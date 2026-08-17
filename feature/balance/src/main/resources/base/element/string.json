@@ -1,0 +1,52 @@
+{
+  "string": [
+    {
+      "name": "title_balance",
+      "value": "余额"
+    },
+    {
+      "name": "no_api_key_hint",
+      "value": "请先在设置页配置 API Key"
+    },
+    {
+      "name": "go_to_settings",
+      "value": "前往设置"
+    },
+    {
+      "name": "account_available",
+      "value": "账户可用"
+    },
+    {
+      "name": "account_unavailable",
+      "value": "账户不可用"
+    },
+    {
+      "name": "total_balance",
+      "value": "总余额"
+    },
+    {
+      "name": "granted_balance",
+      "value": "赠送余额"
+    },
+    {
+      "name": "topped_up_balance",
+      "value": "充值余额"
+    },
+    {
+      "name": "loading",
+      "value": "加载中..."
+    },
+    {
+      "name": "retry",
+      "value": "重试"
+    },
+    {
+      "name": "refresh",
+      "value": "刷新"
+    },
+    {
+      "name": "CNY",
+      "value": "CNY ￥"
+    }
+  ]
+}

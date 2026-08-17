@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "balance",
+    "type": "har",
+    "routerMap": "$profile:router_map",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}
