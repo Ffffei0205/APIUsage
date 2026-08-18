@@ -6,7 +6,7 @@
  * 文件描述: 余额页面的数据驱动，负责读取 API Key、查询余额、刷新/重试
  */
 import { UIContext } from '@kit.ArkUI';
-import { LoadingStatus, PageContext, PageEnum, PreferenceManager, StorageKey } from "common";
+import { ApiConfiguration, ApiConfigurationManager, LoadingStatus, PageContext, PageEnum, PreferenceManager, StorageKey } from "common";
 import { BaseHomeEventParam, BaseHomeEventType, BaseHomeViewModel } from 'commonbusiness';
 import DeepSeekApi, { BalanceResponse } from "../api/DeepSeekApi";
 import { BalancePageState } from "./BalancePageState";
@@ -14,6 +14,7 @@ import { BalancePageState } from "./BalancePageState";
 export class BalancePageVM extends BaseHomeViewModel<BalancePageState> {
   private static instance: BalancePageVM;
   private preferenceManager: PreferenceManager = PreferenceManager.getInstance();
+  private configurationManager: ApiConfigurationManager = ApiConfigurationManager.getInstance();
 
   private constructor() {
     super(new BalancePageState());
@@ -50,7 +51,7 @@ export class BalancePageVM extends BaseHomeViewModel<BalancePageState> {
   private initData(): void {
     const uiContext: UIContext | undefined = AppStorage.get<UIContext>(StorageKey.UI_CONTEXT);
     if (uiContext != undefined) {
-      this.preferenceManager.initPreference('hanbaoStore');
+      this.preferenceManager.initPreference();
       this.loadApiKey();
     } else {
       setTimeout(() => {
@@ -60,11 +61,11 @@ export class BalancePageVM extends BaseHomeViewModel<BalancePageState> {
   }
 
   private loadApiKey(): void {
-    const key: string | null = this.preferenceManager.getValue<string>(StorageKey.DS_API_KEY);
-    if (key != null && key.length > 0) {
+    const configuration: ApiConfiguration | undefined = this.configurationManager.getEnabledConfiguration();
+    if (configuration !== undefined && configuration.apiKey.length > 0) {
       this.state.hasApiKey = true;
-      this.state.savedKeyMasked = this.maskKey(key);
-      this.queryBalance(key);
+      this.state.savedKeyMasked = this.maskKey(configuration.apiKey);
+      this.queryBalance(configuration.apiKey);
     } else {
       this.state.hasApiKey = false;
       this.state.savedKeyMasked = '';
@@ -93,9 +94,9 @@ export class BalancePageVM extends BaseHomeViewModel<BalancePageState> {
   }
 
   private refresh(): void {
-    const key: string | null = this.preferenceManager.getValue<string>(StorageKey.DS_API_KEY);
-    if (key != null && key.length > 0) {
-      this.queryBalance(key);
+    const configuration: ApiConfiguration | undefined = this.configurationManager.getEnabledConfiguration();
+    if (configuration !== undefined && configuration.apiKey.length > 0) {
+      this.queryBalance(configuration.apiKey);
     }
   }
 }

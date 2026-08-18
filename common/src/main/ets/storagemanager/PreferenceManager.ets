@@ -6,7 +6,7 @@ import Logger from "../util/Logger";
 
 
 const TAG: string = '[PreferenceManager]';
-const PREFERENCES_NAME: string = 'hanbaoStore'
+const PREFERENCES_NAME: string = 'APIUsageStore'
 
 export class PreferenceManager {
   private static instance: PreferenceManager;
@@ -24,7 +24,7 @@ export class PreferenceManager {
     return PreferenceManager.instance
   }
 
-  public initPreference(storeName: string) {
+  public initPreference(): void {
     if (this.initialized && this.preference) {
       return
     }
@@ -37,7 +37,7 @@ export class PreferenceManager {
     if (preferences.isStorageTypeSupported(preferences.StorageType.GSKV)) {
       Logger.info(TAG, 'This platform can use GSKV, now use GSKV');
       this.canUseGSKV = true
-      let options: preferences.Options = { name: storeName, storageType: preferences.StorageType.GSKV };
+      let options: preferences.Options = { name: PREFERENCES_NAME, storageType: preferences.StorageType.GSKV };
       try {
         this.preference = preferences.getPreferencesSync(uiContext.getHostContext(), options)
       } catch (error) {
@@ -47,7 +47,7 @@ export class PreferenceManager {
     } else {
       Logger.info(TAG, 'This platform can not use GSKV, now use XML');
       this.canUseGSKV = false
-      let options: preferences.Options = { name: storeName, storageType: preferences.StorageType.XML }
+      let options: preferences.Options = { name: PREFERENCES_NAME, storageType: preferences.StorageType.XML }
       try {
         this.preference = preferences.getPreferencesSync(uiContext.getHostContext(), options)
       } catch (error) {

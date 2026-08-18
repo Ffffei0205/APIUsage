@@ -4,6 +4,8 @@ export { IPageContext, PageContext } from './src/main/ets/routermanager/PageCont
 
 export {PreferenceManager} from './src/main/ets/storagemanager/PreferenceManager'
 
+export { ApiConfigurationManager } from './src/main/ets/storagemanager/ApiConfigurationManager';
+
 export { BaseState } from './src/main/ets/viewmodel/BaseState';
 
 export { BaseVM } from './src/main/ets/viewmodel/BaseVM';

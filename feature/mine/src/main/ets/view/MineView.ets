@@ -33,6 +33,14 @@ export struct MineView {
   }
 
   @Builder
+  bindSheetTitleBuilder() {
+    Text(this.minePageState.bindSheetItem?.textContent ?? '')
+      .fontSize($r('sys.float.Title_M'))
+      .fontWeight(FontWeight.Medium)
+      .fontColor($r('sys.color.font_primary'))
+  }
+
+  @Builder
   mineContentViewBuilder() {
     Scroll(this.minePageState.scroller) {
       Column({ space: CommonConstants.SPACE_12 }) {
@@ -67,17 +75,14 @@ export struct MineView {
                   hdsListItem({
                     prefixResource: item.symbolSrc,
                     title: item.textContent,
-                    // prefixColor:$r('sys.color.icon_secondary'),
-                    // subTitle:$r(''),
-                    // desc:$r(''),
-                    // badgeNum:
-                    // buttonTitle:
-                    // itemHeight:
                     handleClickAction: () => {
                       if (item.onclick) {
                         item.onclick();
                       } else {
-
+                        this.viewModel.sendEvent<MineItem>({
+                          type: MineEventType.SHOW_BIND_SHEET,
+                          param: item,
+                        });
                       }
                     },
                   })
@@ -102,6 +107,16 @@ export struct MineView {
     .height('100%')
     .width('100%')
     .backgroundColor($r('sys.color.background_secondary'))
+    .bindSheet(this.minePageState.bindSheetShow, this.minePageState.bindSheetItem?.builder?.builder(), {
+      title: () => this.bindSheetTitleBuilder(),
+      height: SheetSize.LARGE,
+      preferType: SheetType.BOTTOM,
+      showClose: true,
+      blurStyle: BlurStyle.Regular,
+      onWillDisappear: () => {
+        this.viewModel.sendEvent<null>({ type: MineEventType.DISMISS_BIND_SHEET, param: null });
+      },
+    })
     .onDidScroll((xOffset: number, yOffset: number) => {
       this.viewModel.sendEvent<OffsetParam>({
         type: BaseHomeEventType.HANDLE_SCROLL_OFFSET,

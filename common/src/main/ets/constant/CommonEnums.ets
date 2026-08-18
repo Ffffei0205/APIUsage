@@ -25,7 +25,7 @@ export enum StorageKey {
   UI_CONTEXT = 'ApiUsage_UIContext',  //UI CONTEXT
   GLOBAL_INFO = 'ApiUsage_GlobalInfoModel', // 主要存一些全局信息
   CURRENT_COLOR_MODE = 'currentColorMode',
-  DS_API_KEY = 'ApiUsage_api_key',  //  DeepSeek API
+  API_CONFIGURATION_LIST = 'ApiUsage_api_configuration_list',
 
   CURRENT_TAB = 'ApiUsage_CurrentTabIndex', // 当前的tab Index
   MINE_PAGE_CONTEXT = 'ApiUsage_MinePageContext', // “我的”页面Context

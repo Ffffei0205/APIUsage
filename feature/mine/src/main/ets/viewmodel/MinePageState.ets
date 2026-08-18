@@ -7,18 +7,13 @@
  */
 
 
-// import { ObservedArray } from 'common';
 import { BaseHomeState } from 'commonbusiness';
-import { PageEnum } from 'common';
 
 @Observed
 export class MinePageState extends BaseHomeState {
-  public newContentNumber: number = 0;
   public listItemData: ListGroup[] = [];
-  public isLogin: boolean = false;
-  public isShowAccountInfo: boolean = false;
-  public nickName: string = '';
-  public avatarUrl: string = '';
+  public bindSheetShow: boolean = false;
+  public bindSheetItem?: MineItem = undefined;
 }
 
 @Observed

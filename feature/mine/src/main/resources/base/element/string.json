@@ -6,7 +6,7 @@
     },
     {
       "name": "api_key_label",
-      "value": "API Key"
+      "value": "当前 API Key"
     },
     {
       "name": "api_key_placeholder",
@@ -18,7 +18,7 @@
     },
     {
       "name": "delete_key",
-      "value": "删除 Key"
+      "value": "删除"
     },
     {
       "name": "key_not_set",
@@ -26,19 +26,87 @@
     },
     {
       "name": "key_saved",
-      "value": "已保存"
+      "value": "已配置"
+    },
+    {
+      "name": "edit",
+      "value": "编辑"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    },
+    {
+      "name": "api_key_recent_update",
+      "value": "最近更新"
+    },
+    {
+      "name": "api_key_used_days",
+      "value": "已使用 %d 天"
+    },
+    {
+      "name": "api_key_update_unknown",
+      "value": "暂无记录"
+    },
+    {
+      "name": "api_key_delete_title",
+      "value": "删除 API Key"
+    },
+    {
+      "name": "api_key_delete_message",
+      "value": "删除后将无法继续使用该 API Key，是否删除？"
+    },
+    {
+      "name": "api_config_add",
+      "value": "添加 API 配置"
+    },
+    {
+      "name": "api_config_enable",
+      "value": "启用"
+    },
+    {
+      "name": "api_config_enabled",
+      "value": "已启用"
+    },
+    {
+      "name": "api_config_inactive",
+      "value": "未启用"
+    },
+    {
+      "name": "api_config_default_type",
+      "value": "DeepSeek"
+    },
+    {
+      "name": "api_config_recent_update",
+      "value": "最近更新"
+    },
+    {
+      "name": "api_config_delete_title",
+      "value": "删除 API 配置"
+    },
+    {
+      "name": "api_config_delete_message",
+      "value": "删除后将无法继续使用此 API 配置，是否删除？"
     },
     {
       "name": "about_app",
       "value": "关于"
     },
     {
-      "name": "app_version",
-      "value": "版本 1.0.0"
+      "name": "app_name",
+      "value": "ApiUsage"
     },
     {
-      "name": "feedback",
-      "value": "反馈"
+      "name": "version_information",
+      "value": "版本信息"
+    },
+    {
+      "name": "feedback_email",
+      "value": "反馈邮箱"
+    },
+    {
+      "name": "feedback_email_value",
+      "value": "ffffei0205@qq.com"
     },
     {
       "name": "setting",

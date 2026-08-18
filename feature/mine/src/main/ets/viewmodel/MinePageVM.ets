@@ -8,60 +8,16 @@
 
 import { BaseHomeEventParam, BaseHomeEventType, BaseHomeViewModel } from "commonbusiness";
 import { PageContext, PageEnum, StorageKey } from "common";
+import { AboutViewBuilder } from "../view/AboutView";
 import { BuilderEnum, ListGroup, MineItem, MinePageState } from "./MinePageState";
 
 export class MinePageVM extends BaseHomeViewModel<MinePageState> {
   private static instance: MinePageVM;
-  public listGroupData: ListGroup[] = [
-    {
-      id: 0,
-      group: [
-        {
-          textContent: $r('app.string.api_setting'),
-          symbolSrc: $r('sys.symbol.gearshape'),
-          type: BuilderEnum.API_SETTING_ITEM,
-          onclick: () => {
-            MinePageVM.getInstance().sendEvent<null>({
-              type: MineEventType.JUMP_TO_API_SETTING_PAGE,
-              param: null
-            })
-          }
-        }
-      ]
-    },
-    {
-      id: 1,
-      group: [{
-        textContent: $r('app.string.setting'),
-        symbolSrc: $r('sys.symbol.gearshape'),
-        type: BuilderEnum.CARD_ITEM,
-        onclick: () => {
-          MinePageVM.getInstance().sendEvent<null>({
-            type: MineEventType.JUMP_TO_SETTING_PAGE,
-            param: null,
-          })
-        }
-      }]
-    },
-    {
-      id: 2,
-      group: [
-        {
-          textContent: $r('app.string.about_app'),
-          symbolSrc: $r('sys.symbol.info_circle'),
-          type: BuilderEnum.CARD_ITEM
-        },
-        {
-          textContent: $r('app.string.feedback'),
-          symbolSrc: $r('sys.symbol.questionmark_circle'),
-          type: BuilderEnum.CARD_ITEM
-        },
-      ]
-    },
-  ];
+  private listGroupData: ListGroup[] = [];
 
   private constructor() {
     super(new MinePageState());
+    this.initializeListGroupData();
   }
 
   public static getInstance() {
@@ -79,14 +35,76 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
       this.jumpToSettingPage()
     } else if (eventType === MineEventType.JUMP_TO_API_SETTING_PAGE) {
       this.jumpToAPISettingPage()
+    } else if (eventType === MineEventType.SHOW_BIND_SHEET) {
+      this.showBindSheet(event.param as MineItem);
+    } else if (eventType === MineEventType.DISMISS_BIND_SHEET) {
+      this.dismissBindSheet();
     } else {
       return super.sendEvent(event as BaseHomeEventParam<T>);
     }
   }
 
+  private initializeListGroupData(): void {
+    this.listGroupData = [
+      {
+        id: 0,
+        group: [
+          {
+            textContent: $r('app.string.api_setting'),
+            symbolSrc: $r('sys.symbol.gearshape'),
+            type: BuilderEnum.API_SETTING_ITEM,
+            onclick: () => {
+              MinePageVM.getInstance().sendEvent<null>({
+                type: MineEventType.JUMP_TO_API_SETTING_PAGE,
+                param: null,
+              });
+            },
+          },
+        ],
+      },
+      {
+        id: 1,
+        group: [
+          {
+            textContent: $r('app.string.setting'),
+            symbolSrc: $r('sys.symbol.gearshape'),
+            type: BuilderEnum.CARD_ITEM,
+            onclick: () => {
+              MinePageVM.getInstance().sendEvent<null>({
+                type: MineEventType.JUMP_TO_SETTING_PAGE,
+                param: null,
+              });
+            },
+          },
+        ],
+      },
+      {
+        id: 2,
+        group: [
+          {
+            textContent: $r('app.string.about_app'),
+            symbolSrc: $r('sys.symbol.info_circle'),
+            type: BuilderEnum.CARD_ITEM,
+            builder: wrapBuilder(AboutViewBuilder),
+          },
+        ],
+      },
+    ];
+  }
+
 
   private assignData(): void {
-    this.state.listItemData = this.listGroupData; // 关键：把分组数据灌进 state
+    this.state.listItemData = this.listGroupData;
+  }
+
+  private showBindSheet(item: MineItem): void {
+    this.state.bindSheetItem = item;
+    this.state.bindSheetShow = true;
+  }
+
+  private dismissBindSheet(): void {
+    this.state.bindSheetShow = false;
+    this.state.bindSheetItem = undefined;
   }
 
   private jumpToSettingPage() {
@@ -107,7 +125,9 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
 export enum MineEventType {
   INIT_DATA = 'initData',
   JUMP_TO_SETTING_PAGE = "jumpToSettingPage",
-  JUMP_TO_API_SETTING_PAGE = "jumpToAPISettingPage"
+  JUMP_TO_API_SETTING_PAGE = "jumpToAPISettingPage",
+  SHOW_BIND_SHEET = 'showBindSheet',
+  DISMISS_BIND_SHEET = 'dismissBindSheet',
 }
 
 export interface MineEventParam<T> {

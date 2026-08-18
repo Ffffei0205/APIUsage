@@ -5,8 +5,6 @@ import { PreferenceManager } from '../storagemanager/PreferenceManager';
 import Logger from './Logger';
 
 const TAG: string = '[ThemeManager]';
-const PREFERENCES_NAME: string = 'hanbaoStore';
-
 export enum AppThemeMode {
   SYSTEM = 'system',
   LIGHT = 'light',
@@ -23,7 +21,7 @@ export class ThemeManager {
   }
 
   public static restoreThemeMode(): void {
-    ThemeManager.preferenceManager.initPreference(PREFERENCES_NAME);
+    ThemeManager.preferenceManager.initPreference();
     const savedThemeMode: AppThemeMode | null =
       ThemeManager.preferenceManager.getValue<AppThemeMode>(StorageKey.CURRENT_COLOR_MODE);
     if (savedThemeMode === AppThemeMode.SYSTEM || savedThemeMode === AppThemeMode.LIGHT ||
