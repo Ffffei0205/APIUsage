@@ -45,8 +45,20 @@
       "value": "刷新"
     },
     {
+      "name": "current_api_key",
+      "value": "当前 API Key"
+    },
+    {
+      "name": "last_refreshed_at",
+      "value": "刷新于 %s"
+    },
+    {
       "name": "CNY",
       "value": "CNY ￥"
+    },
+    {
+      "name": "rmb_symbol",
+      "value": "￥"
     }
   ]
 }

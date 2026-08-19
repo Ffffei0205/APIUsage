@@ -59,12 +59,15 @@ export struct APISettingView {
   }
 
   private maskKey(apiKey: string): string {
-    if (apiKey.length <= 8) {
-      return '·······';
-    }
-    const start: string = apiKey.substring(0, 4);
-    const end: string = apiKey.substring(apiKey.length - 4);
-    return `${start}·······${end}`;
+    const prefixLength: number = Math.min(2, apiKey.length);
+    const hasSeparator: boolean = apiKey.length > prefixLength && apiKey.charAt(prefixLength) === '-';
+    const keyBodyStartIndex: number = hasSeparator ? prefixLength + 1 : prefixLength;
+    const startEndIndex: number = Math.min(keyBodyStartIndex + 5, apiKey.length);
+    const endStartIndex: number = Math.max(startEndIndex, apiKey.length - 4);
+    const prefix: string = apiKey.substring(0, prefixLength);
+    const start: string = apiKey.substring(keyBodyStartIndex, startEndIndex);
+    const end: string = apiKey.substring(endStartIndex);
+    return `${prefix}${hasSeparator ? '-' : ''}${start}*****${end}`;
   }
 
   private formatDate(timestamp: number): string {

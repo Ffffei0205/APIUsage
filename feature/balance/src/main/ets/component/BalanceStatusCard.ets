@@ -10,41 +10,69 @@ import { CommonConstants } from "common";
 @Component
 export struct BalanceStatusCard {
   @Prop isAvailable: boolean = false; // 账户是否可用
+  @Prop savedKeyMasked: string = '';
+  @Prop refreshedAtText: string = '';
   onRefresh?: () => void;
 
   build() {
-    Row() {
+    Column({ space: $r('sys.float.padding_level4') }) {
       Row() {
-        Text('\u25CF')
-          .fontSize(20)
-          .fontColor(this.isAvailable ? $r('app.color.success_color') : $r('app.color.error_color'))
-          .margin({ right: 8 })
-        Text(this.isAvailable ? $r('app.string.account_available') : $r('app.string.account_unavailable'))
-          .fontSize(16)
-          .fontColor(this.isAvailable ? $r('app.color.success_color') : $r('app.color.error_color'))
-          .fontWeight(FontWeight.Medium)
+        Column({ space: $r('sys.float.padding_level1') }) {
+          Text($r('app.string.current_api_key'))
+            .fontSize($r('sys.float.Body_S'))
+            .fontColor($r('sys.color.font_primary'))
+          Text(this.savedKeyMasked)
+            .fontSize($r('sys.float.Body_M'))
+            .fontColor($r('sys.color.font_secondary'))
+            .fontWeight(FontWeight.Medium)
+        }
+        .alignItems(HorizontalAlign.Start)
+
+        Button() {
+          SymbolGlyph($r('sys.symbol.arrow_clockwise'))
+            .fontSize($r('sys.float.Body_M'))
+            .fontColor([$r('sys.color.font_primary')])
+            .fontWeight(FontWeight.Medium)
+        }
+          .backgroundColor($r('sys.color.comp_background_secondary'))
+          .borderRadius($r('sys.float.corner_radius_level12'))
+          .height(32)
+          .width(32)
+          .onClick(() => {
+            this.onRefresh?.();
+          })
       }
-      // .padding($r('sys.float.padding_level8'))
-      // .backgroundColor($r('sys.color.comp_background_primary'))
-      // .borderRadius($r('sys.float.corner_radius_level12'))
+      .width(CommonConstants.FULL_PERCENT)
+      .alignItems(VerticalAlign.Center)
+      .justifyContent(FlexAlign.SpaceBetween)
 
+      Divider()
+        .color($r('app.color.divider_color'))
 
-      Button($r('app.string.refresh'))
-        .backgroundColor($r('app.color.primary_color'))
-        .fontSize(14)
-        .borderRadius(8)
-        .height(36)
-        .padding({ left: 16, right: 16 })
-        .onClick(() => {
-          this.onRefresh?.(); // 有回调才执行，动作逻辑由父级决定
-        })
+      Row() {
+        Row({ space: $r('sys.float.padding_level2') }) {
+          Text('\u25CF')
+            .fontSize($r('sys.float.Body_M'))
+            .fontColor(this.isAvailable ? $r('app.color.success_color') : $r('app.color.error_color'))
+          Text(this.isAvailable ? $r('app.string.account_available') : $r('app.string.account_unavailable'))
+            .fontSize($r('sys.float.Body_S'))
+            .fontColor(this.isAvailable ? $r('app.color.success_color') : $r('app.color.error_color'))
+            .fontWeight(FontWeight.Medium)
+        }
+
+        if (this.refreshedAtText.length > 0) {
+          Text($r('app.string.last_refreshed_at', this.refreshedAtText))
+            .fontSize($r('sys.float.Body_S'))
+            .fontColor($r('sys.color.font_secondary'))
+        }
+      }
+      .width(CommonConstants.FULL_PERCENT)
+      .alignItems(VerticalAlign.Center)
+      .justifyContent(FlexAlign.SpaceBetween)
     }
-    .alignItems(VerticalAlign.Center)
-    .justifyContent(FlexAlign.SpaceBetween)
     .width(CommonConstants.FULL_PERCENT)
     .padding($r('sys.float.padding_level8'))
     .backgroundColor($r('sys.color.comp_background_primary'))
     .borderRadius($r('sys.float.corner_radius_level12'))
-    .shadow(ShadowStyle.OUTER_DEFAULT_SM)
   }
 }

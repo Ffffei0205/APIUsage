@@ -73,12 +73,15 @@ export class BalancePageVM extends BaseHomeViewModel<BalancePageState> {
   }
 
   private maskKey(key: string): string {
-    if (key.length <= 8) {
-      return '****';
-    }
-    const start = key.substring(0, 4);
-    const end = key.substring(key.length - 4);
-    return start + '****' + end;
+    const prefixLength: number = Math.min(2, key.length);
+    const hasSeparator: boolean = key.length > prefixLength && key.charAt(prefixLength) === '-';
+    const keyBodyStartIndex: number = hasSeparator ? prefixLength + 1 : prefixLength;
+    const startEndIndex: number = Math.min(keyBodyStartIndex + 5, key.length);
+    const endStartIndex: number = Math.max(startEndIndex, key.length - 4);
+    const prefix: string = key.substring(0, prefixLength);
+    const start: string = key.substring(keyBodyStartIndex, startEndIndex);
+    const end: string = key.substring(endStartIndex);
+    return `${prefix}${hasSeparator ? '-' : ''}${start}*****${end}`;
   }
 
   private async queryBalance(apiKey: string): Promise<void> {

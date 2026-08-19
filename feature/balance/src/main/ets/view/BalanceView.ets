@@ -13,6 +13,7 @@ import { BalancePageState } from "../viewmodel/BalancePageState";
 import { BaseHomeEventType, BaseHomeView, HomeContentParams, OffsetParam } from "commonbusiness";
 import { BalanceStatusCard } from "../component/BalanceStatusCard";
 import { BalanceCurrencyCard } from "../component/BalanceCurrencyCard";
+import { BalanceDetailCard } from "../component/BalanceDetailCard";
 import { BalanceNoKeyHint } from "../component/BalanceNoKeyHint";
 
 @Builder
@@ -28,9 +29,28 @@ export struct BalanceView {
     AppStorage.get(StorageKey.GLOBAL_INFO) ?? new GlobalInfoModel();
   homeTabController: HdsTabsController = new HdsTabsController();
   scroller: Scroller = new Scroller();
+  @State refreshedAtText: string = '';
 
   aboutToAppear(): void {
     //this.viewModel.sendEvent<null>({ type: BalanceEventType.INIT_DATA, param: null });
+  }
+
+  private updateRefreshedAtText(): void {
+    const date: Date = new Date();
+    const month: string = this.formatTwoDigits(date.getMonth() + 1);
+    const day: string = this.formatTwoDigits(date.getDate());
+    const hour: string = this.formatTwoDigits(date.getHours());
+    const minute: string = this.formatTwoDigits(date.getMinutes());
+    this.refreshedAtText = `${month}-${day} ${hour}:${minute}`;
+  }
+
+  private formatTwoDigits(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
+  private refreshBalance(): void {
+    this.updateRefreshedAtText();
+    this.viewModel.sendEvent<null>({ type: BalanceEventType.REFRESH, param: null });
   }
 
   @Builder
@@ -41,17 +61,31 @@ export struct BalanceView {
           // 数据往下流：state → 子组件 @Prop
           BalanceStatusCard({
             isAvailable: this.balancePageState.balanceResponse!.is_available,
+            savedKeyMasked: this.balancePageState.savedKeyMasked,
+            refreshedAtText: this.refreshedAtText,
             onRefresh: () => {
-              this.viewModel.sendEvent<null>({ type: BalanceEventType.REFRESH, param: null });
+              this.refreshBalance();
             }
           })
           ForEach(this.balancePageState.balanceResponse!.balance_infos, (item: BalanceInfo) => {
             BalanceCurrencyCard({
               currency: item.currency,
               totalBalance: item.total_balance,
-              grantedBalance: item.granted_balance,
-              toppedUpBalance: item.topped_up_balance,
             })
+            Row({ space: CommonConstants.SPACE_12 }) {
+              BalanceDetailCard({
+                title: $r('app.string.granted_balance'),
+                balance: item.granted_balance,
+              })
+              .layoutWeight(1)
+
+              BalanceDetailCard({
+                title: $r('app.string.topped_up_balance'),
+                balance: item.topped_up_balance,
+              })
+              .layoutWeight(1)
+            }
+            .width(CommonConstants.FULL_PERCENT)
           }, (item: BalanceInfo, index: number) => item.currency + index.toString())
         }
 
@@ -94,10 +128,7 @@ export struct BalanceView {
             this.balanceContentViewBuilder();
           },
           reloadData: () => {
-            this.viewModel.sendEvent<null>({
-              type: BalanceEventType.REFRESH,
-              param: null
-            });
+            this.refreshBalance();
           }
         })
       }
@@ -125,6 +156,7 @@ export struct BalanceView {
     .ignoreLayoutSafeArea([LayoutSafeAreaType.SYSTEM], [LayoutSafeAreaEdge.TOP, LayoutSafeAreaEdge.BOTTOM])
     .onShown(() => {
       // 每次页面重新可见（从配置页返回 / 切回本 tab）都重新读 Key 并刷新余额
+      this.updateRefreshedAtText();
       this.viewModel.sendEvent<null>({
         type: BalanceEventType.INIT_DATA,
         param: null,

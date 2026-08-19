@@ -11,8 +11,6 @@ import { CommonConstants } from "common";
 export struct BalanceCurrencyCard {
   @Prop currency: string = ''; // 币种，如 CNY / USD
   @Prop totalBalance: string = ''; // 总余额
-  @Prop grantedBalance: string = ''; // 赠送余额
-  @Prop toppedUpBalance: string = ''; // 充值余额
 
   build() {
     Column() {
@@ -24,36 +22,19 @@ export struct BalanceCurrencyCard {
       .alignItems(VerticalAlign.Center)
       .justifyContent(FlexAlign.SpaceBetween)
 
-      Text(this.totalBalance)
-        .fontSize(52)
-        .fontWeight(FontWeight.Bold)
-        .fontColor($r('app.color.primary_color'))
-        .width('100%')
-        .margin({ top: CommonConstants.SPACE_14, bottom: CommonConstants.SPACE_14 })
-
-      Divider()
-        .width(CommonConstants.FULL_PERCENT)
-
-      Row() {
-        Column() {
-          Text($r('app.string.topped_up_balance')).fontSize(12)
-          Text(this.toppedUpBalance).fontSize(16).fontWeight(FontWeight.Medium).margin({ top: 4 })
-        }
-        .layoutWeight(1)
-
-        Column() {
-          Text($r('app.string.granted_balance')).fontSize(12)
-          Text(this.grantedBalance).fontSize(16).fontWeight(FontWeight.Medium).margin({ top: 4 })
-        }
-        .layoutWeight(1)
+      Row({ space: $r('sys.float.padding_level2') }) {
+        Text(this.totalBalance)
+          .fontSize(52)
+          .fontWeight(FontWeight.Bold)
+          .fontColor($r('app.color.primary_color'))
       }
-      .margin({top:CommonConstants.SPACE_14})
-      .width('100%')
+      .width(CommonConstants.FULL_PERCENT)
+      .alignItems(VerticalAlign.Center)
+      .margin({ top: CommonConstants.SPACE_14 })
     }
     .width('100%')
     .padding($r('sys.float.padding_level8'))
     .backgroundColor($r('sys.color.comp_background_primary'))
     .borderRadius($r('sys.float.corner_radius_level12'))
-    .shadow(ShadowStyle.OUTER_DEFAULT_XS)
   }
 }
