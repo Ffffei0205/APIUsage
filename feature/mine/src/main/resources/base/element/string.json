@@ -139,6 +139,10 @@
     {
       "name": "theme_dark",
       "value": "深色模式"
+    },
+    {
+      "name": "api_Enhancement",
+      "value": "API信息增强"
     }
   ]
 }

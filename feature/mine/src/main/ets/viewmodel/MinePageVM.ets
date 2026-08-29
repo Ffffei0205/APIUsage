@@ -35,6 +35,8 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
       this.jumpToSettingPage()
     } else if (eventType === MineEventType.JUMP_TO_API_SETTING_PAGE) {
       this.jumpToAPISettingPage()
+    } else if (eventType === MineEventType.JUMP_TO_PLATFORM_PAGE) {
+      this.jumpToPlatformPage()
     } else if (eventType === MineEventType.SHOW_BIND_SHEET) {
       this.showBindSheet(event.param as MineItem);
     } else if (eventType === MineEventType.DISMISS_BIND_SHEET) {
@@ -44,10 +46,27 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
     }
   }
 
+
   private initializeListGroupData(): void {
     this.listGroupData = [
       {
         id: 0,
+        group: [
+          {
+            textContent: $r('app.string.api_Enhancement'),
+            symbolSrc: $r('sys.symbol.gearshape'),
+            type: BuilderEnum.API_SETTING_ITEM,
+            onclick: () => {
+              MinePageVM.getInstance().sendEvent<null>({
+                type: MineEventType.JUMP_TO_PLATFORM_PAGE,
+                param: null
+              })
+            }
+          }
+        ]
+      },
+      {
+        id: 1,
         group: [
           {
             textContent: $r('app.string.api_setting'),
@@ -63,7 +82,7 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
         ],
       },
       {
-        id: 1,
+        id: 2,
         group: [
           {
             textContent: $r('app.string.setting'),
@@ -76,11 +95,6 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
               });
             },
           },
-        ],
-      },
-      {
-        id: 2,
-        group: [
           {
             textContent: $r('app.string.about_app'),
             symbolSrc: $r('sys.symbol.info_circle'),
@@ -107,20 +121,37 @@ export class MinePageVM extends BaseHomeViewModel<MinePageState> {
     this.state.bindSheetItem = undefined;
   }
 
-  private jumpToSettingPage() {
+  /**
+   * 跳转至DeepSeek 开放平台
+   */
+  jumpToPlatformPage(): void {
     const pageContext = AppStorage.get<PageContext>(StorageKey.HOME_PAGE_CONTEXT);
     pageContext?.openPage({
-      routerName: PageEnum.SETTING_VIEW, // 你这里换成 PageEnum.SETTING_VIEW
+      routerName: PageEnum.PLATFORM_WEB_VIEW,
     }, true);
   }
 
+  /**
+   * 跳转至API配置页面
+   */
   jumpToAPISettingPage() {
     const pageContext = AppStorage.get<PageContext>(StorageKey.HOME_PAGE_CONTEXT);
     pageContext?.openPage({
       routerName: PageEnum.API_SETTING_VIEW,
     }, true)
   }
+
+  /**
+   * 跳转至设置页
+   */
+  private jumpToSettingPage() {
+    const pageContext = AppStorage.get<PageContext>(StorageKey.HOME_PAGE_CONTEXT);
+    pageContext?.openPage({
+      routerName: PageEnum.SETTING_VIEW, // 你这里换成 PageEnum.SETTING_VIEW
+    }, true);
+  }
 }
+
 
 export enum MineEventType {
   INIT_DATA = 'initData',
@@ -128,6 +159,7 @@ export enum MineEventType {
   JUMP_TO_API_SETTING_PAGE = "jumpToAPISettingPage",
   SHOW_BIND_SHEET = 'showBindSheet',
   DISMISS_BIND_SHEET = 'dismissBindSheet',
+  JUMP_TO_PLATFORM_PAGE = "jumpToPlatformPage"
 }
 
 export interface MineEventParam<T> {

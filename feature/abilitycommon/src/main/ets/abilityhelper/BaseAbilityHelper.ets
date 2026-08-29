@@ -8,6 +8,7 @@
 import { common, Want, AbilityConstant } from "@kit.AbilityKit";
 import { Logger, PageContext, StorageKey, ThemeManager, WindowUtil } from "common";
 import { window } from "@kit.ArkUI";
+import { webview } from "@kit.ArkWeb";
 
 
 const TAG = '[BaseAbilityHelper]';
@@ -38,6 +39,7 @@ export class BaseAbilityHelper {
     windowStage.loadContent('pages/SplashPage', (err) => {
       WindowUtil.initialize(windowStage);
       ThemeManager.restoreThemeMode();
+      webview.WebviewController.initializeWebEngine();
       // 下面是错误处理
       if (err.code) {
         Logger.error(TAG, `Failed to load the content. Cause: ${err.code} ${err.message}`);

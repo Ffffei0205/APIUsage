@@ -6,6 +6,16 @@
       "buildFunction": "MineViewBuilder"
     },
     {
+      "name": "PlatformWebView",
+      "pageSourceFile": "src/main/ets/view/PlatformWebView.ets",
+      "buildFunction":"PlatformWebViewBuilder"
+    },
+    {
+      "name": "APISettingView",
+      "pageSourceFile": "src/main/ets/view/APISettingView.ets",
+      "buildFunction": "APISettingViewBuilder"
+    },
+    {
       "name": "SettingView",
       "pageSourceFile": "src/main/ets/view/SettingView.ets",
       "buildFunction": "SettingViewBuilder"
@@ -14,11 +24,6 @@
       "name": "BackgroundSettingView",
       "pageSourceFile": "src/main/ets/view/BackgroundSettingView.ets",
       "buildFunction": "BackgroundSettingViewBuilder"
-    },
-    {
-      "name": "APISettingView",
-      "pageSourceFile": "src/main/ets/view/APISettingView.ets",
-      "buildFunction": "APISettingViewBuilder"
     }
   ]
 }
